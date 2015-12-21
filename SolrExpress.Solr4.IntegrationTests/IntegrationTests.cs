@@ -12,6 +12,26 @@ namespace SolrExpress.Solr4.IntegrationTests
     public class IntegrationTests
     {
         /// <summary>
+        /// Where   Inside GetQuery method
+        /// When    Invoking the method "GetQuery"
+        /// What    URL is generated taking hendler parametr from provider config
+        /// </summary>
+        [TestMethod]
+        public void IntegrationTestSearchHandler()
+        {
+            // Arrange
+            var provider = new Provider("http://lcadse3:8983/solr/gateway_type_statistics_service.daily_wiced_errors", "select");
+            var config = new SolrQueryConfiguration { FailFast = false };
+            var solrQuery = new SolrQueryable<TechProductDocument>(provider, new ParameterFactory<TechProductDocument>(), new BuilderFactory<TechProductDocument>(), config);
+
+            // Act / Assert
+            //solrQuery.Execute();
+
+            var query = provider.GetQuery(new List<IParameter>() { new QueryParameter(new QueryAll()) });
+            var execute = provider.Execute(query);
+        }
+
+        /// <summary>
         /// Where   Creating a SOLR context, only creting provider and solr query classes
         /// When    Invoking the method "Execute"
         /// What    Create a communication between software and SOLR

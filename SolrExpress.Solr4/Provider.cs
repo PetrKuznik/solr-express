@@ -14,13 +14,16 @@ namespace SolrExpress.Solr4
     {
         private readonly string _solrHost;
 
+        public string SearchHandlerName { get; private set; }
+
         /// <summary>
         /// Default constructor
         /// </summary>
         /// <param name="solrHost">Solr host address</param>
-        public Provider(string solrHost)
+        public Provider(string solrHost, string searchUrl = "query")
         {
             this._solrHost = solrHost;
+            SearchHandlerName = searchUrl;
         }
 
         /// <summary>
@@ -37,7 +40,7 @@ namespace SolrExpress.Solr4
                 ((IParameter<List<string>>)item).Execute(list);
             }
 
-            return $"query?{string.Join("&", list)}";
+            return $"{SearchHandlerName}?{string.Join("&", list)}";
         }
 
         /// <summary>
